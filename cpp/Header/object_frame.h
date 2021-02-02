@@ -18,6 +18,7 @@ Created on Mon Sept 11 14:51:37 2020
 class frame {
 
 public:
+
 	int lens_position_code;
 	double object_distance;
 	double focus_value;
