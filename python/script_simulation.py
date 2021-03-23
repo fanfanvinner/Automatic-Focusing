@@ -28,23 +28,38 @@ from __init__ import *
 
 # total_folder=r'D:\Material\Plant'
 # total_folder=r'C:\Users\ASUS\Desktop\Material\Grape'
-total_folder=r'C:\Users\ASUS\Desktop\Material\Plant'
+# total_folder=r'C:\Users\ASUS\Desktop\Material\Plant'
 
-for this_peak_search_method in ['Binary','Global','Coarse2Fine'][-1:]:
+# for this_peak_search_method in ['Binary','Global','Coarse2Fine'][-1:]:
     
-    for this_ROI_mode in ['5-Area','9-Area','Center'][-1:]:
+#     for this_ROI_mode in ['5-Area','9-Area','Center'][-1:]:
         
-        for this_imgs_folder_name in os.listdir(total_folder):
+#         for this_imgs_folder_name in os.listdir(total_folder):
 
-            this_imgs_folder=total_folder+'\\'+this_imgs_folder_name
+#             this_imgs_folder=total_folder+'\\'+this_imgs_folder_name
 
-            C_P_S.PeakSearch(this_imgs_folder,'Boccignone',this_ROI_mode,this_peak_search_method)
+#             C_P_S.PeakSearch(this_imgs_folder,'Boccignone',this_ROI_mode,this_peak_search_method)
             
-            # S_A_F.LensAnimation(this_imgs_folder,'Boccignone',this_ROI_mode,this_peak_search_method)
-            # S_A_F.FOVAnimation(this_imgs_folder,'Boccignone',this_ROI_mode,this_peak_search_method)
+#             # S_A_F.LensAnimation(this_imgs_folder,'Boccignone',this_ROI_mode,this_peak_search_method)
+#             # S_A_F.FOVAnimation(this_imgs_folder,'Boccignone',this_ROI_mode,this_peak_search_method)
 
 # l=[1,2,3,4,5,6,7,8,9,8,7,6,5,4,3,2,1]
 # idx_peak=C_P_S.GlobalSearch(l)
 
 '''JL method'''
 '''Rule-based'''
+
+total_folder=r'E:\GitHub\KAMERAWERK\VCM-Dual\Material'
+
+list_object_depth=[]
+
+for this_imgs_folder_name in os.listdir(total_folder):
+    
+    this_imgs_folder_A=total_folder+'\\'+this_imgs_folder_name+'\\A'
+    this_imgs_folder_B=total_folder+'\\'+this_imgs_folder_name+'\\B'
+    
+    print(this_imgs_folder_name.strip('g=').strip('mm'))
+    
+    C_P_S.PeakSearch(this_imgs_folder_A,'Boccignone','Center','Global')
+    C_P_S.PeakSearch(this_imgs_folder_B,'Boccignone','Center','Global')
+            

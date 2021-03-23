@@ -37,7 +37,8 @@ from configuration_color import map_operator_color,\
 
 from configuration_parameter import zoom_factor,\
                                     ROI_weight_5_area,\
-                                    ROI_weight_9_area
+                                    ROI_weight_9_area,\
+                                    size_marker
 
 #------------------------------------------------------------------------------
 """
@@ -326,21 +327,23 @@ def PeakSearch(imgs_folder,operator,ROI_mode,peak_search_method):
     print('')
     
     str_a,str_b=imgs_folder.split('Material')
+    str_a+='/Outcome'
+    
     str_c,str_d=imgs_folder.split('Material')[-1].strip('\\').split('\\')
 
     #construct output folder
-    output_folder_operator=str_a+'\\AF Curve\\Scenario'+str_b
+    output_folder_operator=str_a+'/AF Curve/Scenario'+str_b
     
     try:
         
-        output_folder_condition=output_folder_operator.split(str_c)[0].replace('\\Scenario','')+'\\Operator'
+        output_folder_condition=output_folder_operator.split(str_c)[0].replace('/Scenario','')+'/Operator'
     
     except:
         
         output_folder_condition=str_a+'\\AF Curve\Operator'
     
-    output_folder_operator+='\\'+operator+'\\'
-    output_folder_condition+='\\'+operator+'\\'
+    output_folder_operator+='/'+operator+'/'
+    output_folder_condition+='/'+operator+'/'
     
     O_P.GenerateFolder(output_folder_operator)
     O_P.GenerateFolder(output_folder_condition)
@@ -449,7 +452,7 @@ def PeakSearch(imgs_folder,operator,ROI_mode,peak_search_method):
              list_normalized_contrast_plotted,
              color=map_operator_color[operator],
              marker='.',
-             markersize=8,
+             markersize=size_marker,
              linestyle='-',
              label=str_focus_value)
     
@@ -500,7 +503,7 @@ def PeakSearch(imgs_folder,operator,ROI_mode,peak_search_method):
     
     #save the fig
     '''operator experiment'''
-    fig_path_operator=output_folder_operator+'//%s.png'%peak_search_method
+    fig_path_operator=output_folder_operator+'/%s.png'%peak_search_method
     
     '''condition experiment'''
     fig_path_condition=output_folder_condition+'%s %s (%s).png'%(str_c,str_d,peak_search_method)

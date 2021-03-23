@@ -12,18 +12,11 @@ Created on Fri Dec 20 11:08:33 2019
 import os
 import cv2
 
-import numpy as np
 import operation_dictionary as O_D
 
 from o_frame import frame
 
-#pre_fix: same part of imgs name
-# pre_fix='12M_0500mm_VCM_bottom'
-# pre_fix='12M_0500mm_VCM_top'
-# pre_fix='top_VCM_'
-pre_fix='poLight_test_'
-# pre_fix='M_Cali_Near'
-# pre_fix=''
+from configuration_parameter import pre_fix
 
 #------------------------------------------------------------------------------
 """
