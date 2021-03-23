@@ -14,6 +14,12 @@ from __init__ import *
 import numpy as np
 import matplotlib.pyplot as plt
 
+import dill
+dill.load_session('focus_calibration.pkl')
+
+from configuration_color import list_contrast_color
+#%%
+
 '''VCM'''
 list_object_depth=[(k+1)*100 for k in range(10)]
 

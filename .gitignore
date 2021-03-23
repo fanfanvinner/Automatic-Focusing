@@ -2,6 +2,7 @@
 
 #python
 *.pyc
+*.pkl
 __pycache__
 
 #cpp

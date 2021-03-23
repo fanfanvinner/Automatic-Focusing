@@ -306,216 +306,6 @@ def BinarySearch(list_contrast,m=6):
 
 #------------------------------------------------------------------------------
 """
-Plot input image as well as focused value curve
-
-Args:
-   imgs_folder: folder which contains a batch of images 
-   operator: operator of contrast or tenengrad calculation 
-   ROI mode: definition method of ROI ['5-Area', 'Center']
-   peak_search_method: method of peak search
-   
-Returns:
-    None
-"""
-def PeakSearch(imgs_folder,operator,ROI_mode,peak_search_method):
-    
-    print('')
-    print('-- Peak Search')
-    print('-> operator:',operator)
-    print('-> ROI mode:',ROI_mode)
-    print('-> peak search method:',peak_search_method)
-    print('')
-    
-    str_a,str_b=imgs_folder.split('Material')
-    str_a+='/Outcome'
-    
-    str_c,str_d=imgs_folder.split('Material')[-1].strip('\\').split('\\')
-
-    #construct output folder
-    output_folder_operator=str_a+'/AF Curve/Scenario'+str_b
-    
-    try:
-        
-        output_folder_condition=output_folder_operator.split(str_c)[0].replace('/Scenario','')+'/Operator'
-    
-    except:
-        
-        output_folder_condition=str_a+'\\AF Curve\Operator'
-    
-    output_folder_operator+='/'+operator+'/'
-    output_folder_condition+='/'+operator+'/'
-    
-    O_P.GenerateFolder(output_folder_operator)
-    O_P.GenerateFolder(output_folder_condition)
-    
-    #frame object for coarse and fine search
-    list_frame=O_I.FramesConstruction(imgs_folder,operator,ROI_mode)
-    list_contrast=[this_frame.focus_value for this_frame in list_frame]
-    
-    '''Global Search (Full Sweep)'''
-    if peak_search_method=='Global':
-        
-        list_index_plotted=GlobalSearch(list_contrast)
-        abbr_method='GS'
-        
-    '''Coarse to Fine Search'''
-    if peak_search_method=='Coarse2Fine':
-        
-        list_index_plotted=Coarse2FineSearch(list_contrast)
-        abbr_method='C2F'
-        
-    '''Binary Search (Fibonacci)'''
-    if peak_search_method=='Binary':
-        
-        list_index_plotted=BinarySearch(list_contrast)
-        abbr_method='BS'
-    
-    list_frame_plotted=[list_frame[this_index] for this_index in list_index_plotted]
-    list_code_plotted=[this_frame.lens_position_code for this_frame in list_frame_plotted]    
-    list_contrast_plotted=[this_frame.focus_value for this_frame in list_frame_plotted]
-     
-    peak_index=list_contrast_plotted.index(np.max(list_contrast_plotted))
-    
-    #normalization of contrast list
-    list_normalized_contrast_plotted=C_N_A.Normalize(list_contrast_plotted)
-
-    plt.figure(figsize=(17,6))
-    
-    #limit of x and y
-    x_min,x_max=-24,1024
-    y_min,y_max=0-.023*2,1+.023*2
-    
-    #tick step
-    x_major_step=100
-    x_minor_step=50
-    y_major_step=0.1
-    y_minor_step=0.05
-    
-    #text of parameter
-    if ROI_mode=='5-Area':
-                
-        str_text='ROI Zoom Factor: %d Weight: %.2f-%.2f'%(zoom_factor/2,
-                                                          ROI_weight_5_area[0],
-                                                          ROI_weight_5_area[1])
-    
-    if ROI_mode=='9-Area':
-                
-        str_text='ROI Zoom Factor: %d Weight: %.2f-%.2f'%(zoom_factor/2,
-                                                          ROI_weight_9_area[4],
-                                                          ROI_weight_9_area[0])
-        
-    if ROI_mode=='Center':              
-
-        str_text='ROI Zoom Factor: %d'%(zoom_factor/2) 
-        
-    '''input image and bound'''
-    ax_input_image=plt.subplot(121)
-    
-    peak_code=list_code_plotted[peak_index]
-    peak_normalized_contrast=list_normalized_contrast_plotted[peak_index]
-    
-    plt.imshow(list_frame_plotted[peak_index].img_gray,cmap='gray')
-    plt.imshow(list_frame_plotted[peak_index].img_ROI,cmap='seismic_r') 
-        
-    print('')
-    print('---> Peak Lens Position Code:',peak_code)
-    
-    plt.title('Input Image',fontdict=title_prop)
-    
-    plt.xticks([])
-    plt.yticks([])
-    
-    '''contrast curve'''
-    ax_contrast_curve=plt.subplot(122)
-    
-    #set ticks fonts
-    plt.tick_params(labelsize=12)
-    labels=ax_contrast_curve.get_xticklabels()+ax_contrast_curve.get_yticklabels()
-    
-    #label fonts
-    [this_label.set_fontname('Times New Roman') for this_label in labels]
-        
-    plt.xlabel('Lens Position Code',fontdict=label_prop)   
-    plt.ylabel('Focus Value',fontdict=label_prop)
-    
-    if operator in list_contrast_operator:
-        
-        str_focus_value=operator+' Contrast'
-        
-    if operator in list_tenengrad_operator:
-        
-        str_focus_value=operator+' Tenengrad'
-            
-    plt.title('Focus Value-Lens Position Curve',fontdict=title_prop)
-        
-    plt.plot(list_code_plotted,
-             list_normalized_contrast_plotted,
-             color=map_operator_color[operator],
-             marker='.',
-             markersize=size_marker,
-             linestyle='-',
-             label=str_focus_value)
-    
-    plt.legend(prop=legend_prop,loc='lower right')
-
-    #axis boundary
-    plt.xlim([x_min,x_max])
-    plt.ylim([y_min,y_max])
-    
-    #horizontal line
-    plt.hlines(peak_normalized_contrast,
-               x_min,
-               x_max,
-               color='grey',
-               linestyles="--")
-    
-    #vertical line
-    plt.vlines(peak_code,
-               y_min,
-               y_max,
-               color='grey',
-               linestyles="--")
-
-    #set locator
-    ax_contrast_curve.xaxis.set_major_locator(MultipleLocator(x_major_step))
-    ax_contrast_curve.xaxis.set_minor_locator(MultipleLocator(x_minor_step))
-    ax_contrast_curve.yaxis.set_major_locator(MultipleLocator(y_major_step))
-    ax_contrast_curve.yaxis.set_minor_locator(MultipleLocator(y_minor_step))
-    
-    #annotation of peak VCM code
-    ax_contrast_curve.annotate('Peak: %d'%(peak_code),
-                               xy=(peak_code,peak_normalized_contrast),
-                               xytext=(peak_code+x_major_step/10,peak_normalized_contrast+y_major_step/10),
-                               color='k',
-                               fontproperties=sample_prop)
-    
-    #basic parameter                     
-    ax_contrast_curve.text(0+x_major_step/10,
-                           0+y_major_step/10,
-                           str_text,
-                           fontdict=annotation_prop) 
-         
-    #peak search parameter
-    ax_contrast_curve.text(0+x_major_step/10,
-                           1+y_major_step/10,
-                           'Method: %s Iters: %d'%(abbr_method,len(list_frame_plotted)),
-                           fontdict=text_prop) 
-    
-    #save the fig
-    '''operator experiment'''
-    fig_path_operator=output_folder_operator+'/%s.png'%peak_search_method
-    
-    '''condition experiment'''
-    fig_path_condition=output_folder_condition+'%s %s (%s).png'%(str_c,str_d,peak_search_method)
-    
-    plt.grid()  
-    
-    plt.savefig(fig_path_operator,dpi=300,bbox_inches='tight')
-    plt.savefig(fig_path_condition,dpi=300,bbox_inches='tight')
-    plt.close()
-    
-#------------------------------------------------------------------------------
-"""
 Plot input image as well as contrast curve
 
 Args:
@@ -855,7 +645,7 @@ def FullSweep(imgs_folder,operator,ROI_mode):
     '''AF result: peak VCM code'''  
     if flag=='Coarse':
 
-        peak_index=FullSweepFine(list_contrast_coarse)
+        peak_index=GlobalSearch(list_contrast_coarse)
         peak_VCM_code=list_VCM_code_coarse[peak_index]
         peak_normalized_contrast=C_N_A.Normalize(list_contrast_coarse)[peak_index]
         
@@ -864,7 +654,7 @@ def FullSweep(imgs_folder,operator,ROI_mode):
          
     if flag=='Fine':
 
-        peak_index=FullSweepFine(list_contrast_fine)
+        peak_index=GlobalSearch(list_contrast_fine)
         peak_VCM_code=list_VCM_code_fine[peak_index]
         peak_normalized_contrast=C_N_A.Normalize(list_contrast_fine)[peak_index]
         
@@ -1003,4 +793,216 @@ def FullSweep(imgs_folder,operator,ROI_mode):
     plt.savefig(fig_path_operator,dpi=300,bbox_inches='tight')
     plt.savefig(fig_path_condition,dpi=300,bbox_inches='tight')
     plt.close()
+    
+#------------------------------------------------------------------------------
+"""
+Plot input image as well as focused value curve
+
+Args:
+   imgs_folder: folder which contains a batch of images 
+   operator: operator of contrast or tenengrad calculation 
+   ROI mode: definition method of ROI ['5-Area', 'Center']
+   peak_search_method: method of peak search
+   
+Returns:
+    None
+"""
+def PeakSearch(imgs_folder,operator,ROI_mode,peak_search_method):
+    
+    print('')
+    print('-- Peak Search')
+    print('-> operator:',operator)
+    print('-> ROI mode:',ROI_mode)
+    print('-> peak search method:',peak_search_method)
+    print('')
+    
+    str_a,str_b=imgs_folder.split('Material')
+    str_a+='/Outcome'
+    
+    str_c,str_d=imgs_folder.split('Material')[-1].strip('\\').split('\\')
+
+    #construct output folder
+    output_folder_operator=str_a+'/AF Curve/Scenario'+str_b
+    
+    try:
+        
+        output_folder_condition=output_folder_operator.split(str_c)[0].replace('/Scenario','')+'/Operator'
+    
+    except:
+        
+        output_folder_condition=str_a+'\\AF Curve\Operator'
+    
+    output_folder_operator+='/'+operator+'/'
+    output_folder_condition+='/'+operator+'/'
+    
+    O_P.GenerateFolder(output_folder_operator)
+    O_P.GenerateFolder(output_folder_condition)
+    
+    #frame object for coarse and fine search
+    list_frame=O_I.FramesConstruction(imgs_folder,operator,ROI_mode)
+    list_contrast=[this_frame.focus_value for this_frame in list_frame]
+    
+    '''Global Search (Full Sweep)'''
+    if peak_search_method=='Global':
+        
+        list_index_plotted=GlobalSearch(list_contrast)
+        abbr_method='GS'
+        
+    '''Coarse to Fine Search'''
+    if peak_search_method=='Coarse2Fine':
+        
+        list_index_plotted=Coarse2FineSearch(list_contrast)
+        abbr_method='C2F'
+        
+    '''Binary Search (Fibonacci)'''
+    if peak_search_method=='Binary':
+        
+        list_index_plotted=BinarySearch(list_contrast)
+        abbr_method='BS'
+    
+    list_frame_plotted=[list_frame[this_index] for this_index in list_index_plotted]
+    list_code_plotted=[this_frame.lens_position_code for this_frame in list_frame_plotted]    
+    list_contrast_plotted=[this_frame.focus_value for this_frame in list_frame_plotted]
+     
+    peak_index=list_contrast_plotted.index(np.max(list_contrast_plotted))
+    
+    #normalization of contrast list
+    list_normalized_contrast_plotted=C_N_A.Normalize(list_contrast_plotted)
+
+    plt.figure(figsize=(17,6))
+    
+    #limit of x and y
+    x_min,x_max=-24,1024
+    y_min,y_max=0-.023*2,1+.023*2
+    
+    #tick step
+    x_major_step=100
+    x_minor_step=50
+    y_major_step=0.1
+    y_minor_step=0.05
+    
+    #text of parameter
+    if ROI_mode=='5-Area':
+                
+        str_text='ROI Zoom Factor: %d Weight: %.2f-%.2f'%(zoom_factor/2,
+                                                          ROI_weight_5_area[0],
+                                                          ROI_weight_5_area[1])
+    
+    if ROI_mode=='9-Area':
+                
+        str_text='ROI Zoom Factor: %d Weight: %.2f-%.2f'%(zoom_factor/2,
+                                                          ROI_weight_9_area[4],
+                                                          ROI_weight_9_area[0])
+        
+    if ROI_mode=='Center':              
+
+        str_text='ROI Zoom Factor: %d'%(zoom_factor/2) 
+        
+    '''input image and bound'''
+    ax_input_image=plt.subplot(121)
+    
+    peak_code=list_code_plotted[peak_index]
+    peak_normalized_contrast=list_normalized_contrast_plotted[peak_index]
+    
+    plt.imshow(list_frame_plotted[peak_index].img_gray,cmap='gray')
+    plt.imshow(list_frame_plotted[peak_index].img_ROI,cmap='seismic_r') 
+        
+    print('')
+    print('---> Peak Lens Position Code:',peak_code)
+    
+    plt.title('Input Image',fontdict=title_prop)
+    
+    plt.xticks([])
+    plt.yticks([])
+    
+    '''contrast curve'''
+    ax_contrast_curve=plt.subplot(122)
+    
+    #set ticks fonts
+    plt.tick_params(labelsize=12)
+    labels=ax_contrast_curve.get_xticklabels()+ax_contrast_curve.get_yticklabels()
+    
+    #label fonts
+    [this_label.set_fontname('Times New Roman') for this_label in labels]
+        
+    plt.xlabel('Lens Position Code',fontdict=label_prop)   
+    plt.ylabel('Focus Value',fontdict=label_prop)
+    
+    if operator in list_contrast_operator:
+        
+        str_focus_value=operator+' Contrast'
+        
+    if operator in list_tenengrad_operator:
+        
+        str_focus_value=operator+' Tenengrad'
+            
+    plt.title('Focus Value-Lens Position Curve',fontdict=title_prop)
+        
+    plt.plot(list_code_plotted,
+             list_normalized_contrast_plotted,
+             color=map_operator_color[operator],
+             marker='.',
+             markersize=size_marker,
+             linestyle='-',
+             label=str_focus_value)
+    
+    plt.legend(prop=legend_prop,loc='lower right')
+
+    #axis boundary
+    plt.xlim([x_min,x_max])
+    plt.ylim([y_min,y_max])
+    
+    #horizontal line
+    plt.hlines(peak_normalized_contrast,
+               x_min,
+               x_max,
+               color='grey',
+               linestyles="--")
+    
+    #vertical line
+    plt.vlines(peak_code,
+               y_min,
+               y_max,
+               color='grey',
+               linestyles="--")
+
+    #set locator
+    ax_contrast_curve.xaxis.set_major_locator(MultipleLocator(x_major_step))
+    ax_contrast_curve.xaxis.set_minor_locator(MultipleLocator(x_minor_step))
+    ax_contrast_curve.yaxis.set_major_locator(MultipleLocator(y_major_step))
+    ax_contrast_curve.yaxis.set_minor_locator(MultipleLocator(y_minor_step))
+    
+    #annotation of peak VCM code
+    ax_contrast_curve.annotate('Peak: %d'%(peak_code),
+                               xy=(peak_code,peak_normalized_contrast),
+                               xytext=(peak_code+x_major_step/10,peak_normalized_contrast+y_major_step/10),
+                               color='k',
+                               fontproperties=sample_prop)
+    
+    #basic parameter                     
+    ax_contrast_curve.text(0+x_major_step/10,
+                           0+y_major_step/10,
+                           str_text,
+                           fontdict=annotation_prop) 
+         
+    #peak search parameter
+    ax_contrast_curve.text(0+x_major_step/10,
+                           1+y_major_step/10,
+                           'Method: %s Iters: %d'%(abbr_method,len(list_frame_plotted)),
+                           fontdict=text_prop) 
+    
+    #save the fig
+    '''operator experiment'''
+    fig_path_operator=output_folder_operator+'/%s.png'%peak_search_method
+    
+    '''condition experiment'''
+    fig_path_condition=output_folder_condition+'%s %s (%s).png'%(str_c,str_d,peak_search_method)
+    
+    plt.grid()  
+    
+    plt.savefig(fig_path_operator,dpi=300,bbox_inches='tight')
+    plt.savefig(fig_path_condition,dpi=300,bbox_inches='tight')
+    plt.close()
+    
+    return peak_code
     
