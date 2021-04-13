@@ -19,6 +19,9 @@ dill.load_session('focus_calibration.pkl')
 
 from configuration_color import list_contrast_color
 
+file_name_output_A=r'g_code_60_3900_A.txt'
+file_name_output_B=r'g_code_60_3900_B.txt'
+
 #look for index of correct order
 list_index_sorted=[list_object_depth.index(item) for item in sorted(list_object_depth)]
 
@@ -57,13 +60,13 @@ n_sample=max(list_object_depth)-min(list_object_depth)+1
 O_E.WriteTupleList2File(C_N_A.OptimizedFitting(sorted(list_object_depth),
                                                 list_VCM_code_focused_A_sorted,
                                                 n_sample),
-                        '../Outcome/g_code_60_3900_A.txt')
+                        '../Outcome/'+file_name_output_A)
 
 #curve fitting and export the map into txt file
 O_E.WriteTupleList2File(C_N_A.OptimizedFitting(sorted(list_object_depth),
                                                 list_VCM_code_focused_B_sorted,
                                                 n_sample),
-                        '../Outcome/g_code_60_3900_B.txt')
+                        '../Outcome/'+file_name_output_B)
 # '''VCM'''
 # list_object_depth=[(k+1)*100 for k in range(10)]
 

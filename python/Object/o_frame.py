@@ -38,7 +38,7 @@ class frame:
         self.focus_value=focus_value
         self.lens_position_code=lens_position_code
         
-    def Init(self,operator,ROI_mode):
+    def Init(self,operator,ROI_mode,flag_plot=False):
         
         #read image
         self.img_bgr=cv2.imread(self.path)
@@ -91,6 +91,7 @@ class frame:
                 #draw the bound of ROI
                 for k in range(ROI_linewidth):
                     
+                    '''NEED MODIFICATION'''
                     self.img_ROI[int(i-k)-area_half_height,int(j-k)-area_half_width:int(j+k+1)+area_half_width]=1
                     self.img_ROI[int(i+k)+area_half_height,int(j-k)-area_half_width:int(j+k+1)+area_half_width]=1
                     self.img_ROI[int(i-k)-area_half_height:int(i+k+1)+area_half_height,int(j-k)-area_half_width]=1
@@ -149,3 +150,10 @@ class frame:
       
         print('--> Lens Position Code:',self.lens_position_code)
         # print('--> Focus Value:',self.focus_value)
+        
+        if not flag_plot:
+            
+            #release the storage
+            self.img_bgr=None
+            self.img_gray=None
+            self.img_ROI=None

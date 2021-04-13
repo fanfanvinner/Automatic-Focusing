@@ -31,4 +31,4 @@ luminance_threshold=100
 pre_fix='VCM_'
 
 #marker size of focus value samples
-size_marker=6
+size_marker=4

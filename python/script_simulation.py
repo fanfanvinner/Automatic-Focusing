@@ -46,11 +46,23 @@ from __init__ import *
 # l=[1,2,3,4,5,6,7,8,9,8,7,6,5,4,3,2,1]
 # idx_peak=C_P_S.GlobalSearch(l)
 
-total_folder=r'E:\GitHub\KAMERAWERK\VCM-Dual\Material'
+total_folder=r'E:\GitHub\KAMERAWERK\VCM-Dual\Material\Focus Calibration-Fine'
 
 list_object_depth=[]
 list_VCM_code_focused_A=[]
 list_VCM_code_focused_B=[]
+
+# #%%
+# g=106
+
+# imgs_folder_A=total_folder+'\\g='+str(g)+'mm\\A'
+# imgs_folder_B=total_folder+'\\g='+str(g)+'mm\\B'
+
+# list_object_depth.append(g)
+
+# list_VCM_code_focused_A.append(C_P_S.PeakSearch(imgs_folder_A,'Boccignone','9-Area','Global'))
+# list_VCM_code_focused_B.append(C_P_S.PeakSearch(imgs_folder_B,'Boccignone','5-Area','Global'))
+# #%%
 
 #traverse all image series and calculate VCM code of focused image
 for this_imgs_folder_name in os.listdir(total_folder):

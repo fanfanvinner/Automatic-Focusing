@@ -324,7 +324,7 @@ def FullSweep(imgs_folder,operator,ROI_mode):
     print('')
     
     str_a,str_b=imgs_folder.split('Material')
-    str_c,str_d=imgs_folder.split('Material')[-1].strip('\\').split('\\')
+    str_c,str_d=imgs_folder.split('Material')[-1].strip('\\').split('\\')[-2:]
 
     #construct output folder
     output_folder_operator=str_a+'\\Curve\\Scenario'+str_b
@@ -819,7 +819,7 @@ def PeakSearch(imgs_folder,operator,ROI_mode,peak_search_method):
     str_a,str_b=imgs_folder.split('Material')
     str_a+='/Outcome'
     
-    str_c,str_d=imgs_folder.split('Material')[-1].strip('\\').split('\\')
+    str_c,str_d=imgs_folder.split('Material')[-1].strip('\\').split('\\')[-2:]
 
     #construct output folder
     output_folder_operator=str_a+'/AF Curve/Scenario'+str_b
@@ -903,6 +903,9 @@ def PeakSearch(imgs_folder,operator,ROI_mode,peak_search_method):
     
     peak_code=list_code_plotted[peak_index]
     peak_normalized_contrast=list_normalized_contrast_plotted[peak_index]
+    
+    #reinit for plotting image
+    list_frame_plotted[peak_index].Init(operator,ROI_mode,True)
     
     plt.imshow(list_frame_plotted[peak_index].img_gray,cmap='gray')
     plt.imshow(list_frame_plotted[peak_index].img_ROI,cmap='seismic_r') 
