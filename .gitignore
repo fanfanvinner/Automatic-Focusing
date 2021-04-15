@@ -1,4 +1,8 @@
 #post-fix
+*.dll
+*.lib
+*.config
+*.props
 
 #python
 *.pyc
