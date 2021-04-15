@@ -9,6 +9,8 @@ Created on Mon Sept 11 14:51:37 2020
 @title: Source-Calculation on Contrast
 ******************************************************************************/
 
+#include "stdafx.h"
+
 #include "..\Header\object_frame.h"
 
 #include "..\Header\operation_vector.h"

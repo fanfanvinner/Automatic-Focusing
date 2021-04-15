@@ -9,6 +9,7 @@ Created on Mon Sept 11 14:51:37 2020
 @title: Source-Calculation on Peak Search
 ******************************************************************************/
 
+#include "stdafx.h"
 #include "..\Header\calculation_peak_search.h"
 
 int MaximumIndex(vector<double>& which_vector) {
