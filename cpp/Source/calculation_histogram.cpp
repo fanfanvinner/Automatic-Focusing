@@ -9,7 +9,7 @@ Created on Mon Sept 11 14:51:37 2020
 @title: Source-Calculation on Histogram
 ******************************************************************************/
 
-#include "../stdafx.h"
+#include "stdafx.h"
 
 #include "..\Header\operation_array.h"
 #include "..\Header\operation_vector.h"
