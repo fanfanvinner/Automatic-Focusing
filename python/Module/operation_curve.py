@@ -186,6 +186,7 @@ def CurveBatch(list_x_batch,
         
     plt.figure(figsize=(13,6))
     
+    list_plot=[]
     for k in range(len(list_x_batch)):
             
         this_list_x=list_x_batch[k]
@@ -217,12 +218,20 @@ def CurveBatch(list_x_batch,
             X=[this_x_y[0] for this_x_y in optimizedfitted_x_y]
             Y=[this_x_y[1] for this_x_y in optimizedfitted_x_y]
         
-        plt.plot(X,Y,color=this_color_curve,label=this_str_legend)
-    
-        for kk in range(len(this_list_x)):
-            
-            plt.scatter(this_list_x[kk],this_list_y[kk],color=this_color_curve)
-            
+        #fitted curve
+        plt.plot(X,
+                 Y,
+                 linestyle='-',
+                 linewidth=2,
+                 color=this_color_curve,
+                 label='Fitted Curve of '+this_str_legend)
+        
+        #trained samples
+        plt.plot(this_list_x,
+                 this_list_y,
+                 'o',
+                 color=this_color_curve,label='Trained Samples of '+this_str_legend)
+        
     ax=plt.gca()
     
     ax.xaxis.set_major_locator(MultipleLocator(x_major_step))
@@ -246,7 +255,8 @@ def CurveBatch(list_x_batch,
     plt.xlabel(str_xlabel,fontdict=label_prop)
     plt.ylabel(str_ylabel,fontdict=label_prop)
     
-    plt.legend(prop=legend_prop,loc='upper right')  
+    
+    plt.legend(prop=legend_prop,loc='upper right')
     
     #show the grid
     plt.grid()

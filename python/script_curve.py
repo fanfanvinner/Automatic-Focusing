@@ -15,12 +15,10 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 import dill
-dill.load_session('focus_calibration.pkl')
+dill.load_session('focus_calibration_20210413.pkl')
 
-from configuration_color import list_contrast_color
-
-file_name_output_A=r'g_code_60_3900_A.txt'
-file_name_output_B=r'g_code_60_3900_B.txt'
+file_name_output_A=r'g_code_'+str(min(list_object_depth))+'_'+str(max(list_object_depth))+'_A.txt'
+file_name_output_B=r'g_code_'+str(min(list_object_depth))+'_'+str(max(list_object_depth))+'_B.txt'
 
 #look for index of correct order
 list_index_sorted=[list_object_depth.index(item) for item in sorted(list_object_depth)]
@@ -48,7 +46,7 @@ list_VCM_code_focused_B_sorted=[list_VCM_code_focused_B[this_index] for this_ind
 
 O_C.CurveBatch([sorted(list_object_depth)]*2,
                 [list_VCM_code_focused_A_sorted,list_VCM_code_focused_B_sorted],
-                list_contrast_color,
+                ['olive','steelblue'],
                 ['Camera A','Camera B'],
                 'Object Depth (mm)',
                 'Focused VCM Code (--)',
