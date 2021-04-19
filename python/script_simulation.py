@@ -46,35 +46,44 @@ from __init__ import *
 # l=[1,2,3,4,5,6,7,8,9,8,7,6,5,4,3,2,1]
 # idx_peak=C_P_S.GlobalSearch(l)
 
-total_folder=r'E:\GitHub\KAMERAWERK\VCM-Dual\Material\Focus Calibration-Fine\20210414'
+fixed_imgs_folder=r'E:\GitHub\KAMERAWERK\VCM-Dual\Material\Focus Calibration-Fine\g=498mm'
 
-list_object_depth=[]
-list_VCM_code_focused_A=[]
-list_VCM_code_focused_B=[]
+fixed_imgs_folder_A=fixed_imgs_folder+'\\A'
+fixed_imgs_folder_B=fixed_imgs_folder+'\\B'
 
-# #%%
-# g=98
-
-# imgs_folder_A=total_folder+'\\g='+str(g)+'mm\\A'
-# imgs_folder_B=total_folder+'\\g='+str(g)+'mm\\B'
-
-# list_object_depth.append(g)
-
-# list_VCM_code_focused_A.append(C_P_S.PeakSearch(imgs_folder_A,'Boccignone','9-Area','Global'))
-# list_VCM_code_focused_B.append(C_P_S.PeakSearch(imgs_folder_B,'Boccignone','5-Area','Global'))
+C_P_S.PeakSearch(fixed_imgs_folder_A,'Boccignone','Center','Global')
+C_P_S.PeakSearch(fixed_imgs_folder_B,'Boccignone','Center','Global')
 
 # #%%
+# total_folder=r'E:\GitHub\KAMERAWERK\VCM-Dual\Material\Focus Calibration-Fine\20210414'
 
-#traverse all image series and calculate VCM code of focused image
-for this_imgs_folder_name in os.listdir(total_folder):
-    
-    this_imgs_folder_A=total_folder+'\\'+this_imgs_folder_name+'\\A'
-    this_imgs_folder_B=total_folder+'\\'+this_imgs_folder_name+'\\B'
-    
-    list_object_depth.append(int(this_imgs_folder_name.strip('g=').strip('mm')))
-    
-    list_VCM_code_focused_A.append(C_P_S.PeakSearch(this_imgs_folder_A,'Boccignone','Center','Global'))
-    list_VCM_code_focused_B.append(C_P_S.PeakSearch(this_imgs_folder_B,'Boccignone','Center','Global'))
+# list_object_depth=[]
+# list_VCM_code_focused_A=[]
+# list_VCM_code_focused_B=[]
 
-import dill
-dill.dump_session('focus_calibration_'+total_folder.split('\\')[-1]+'.pkl')
+# # #%%
+# # g=98
+
+# # imgs_folder_A=total_folder+'\\g='+str(g)+'mm\\A'
+# # imgs_folder_B=total_folder+'\\g='+str(g)+'mm\\B'
+
+# # list_object_depth.append(g)
+
+# # list_VCM_code_focused_A.append(C_P_S.PeakSearch(imgs_folder_A,'Boccignone','9-Area','Global'))
+# # list_VCM_code_focused_B.append(C_P_S.PeakSearch(imgs_folder_B,'Boccignone','5-Area','Global'))
+
+# # #%%
+
+# #traverse all image series and calculate VCM code of focused image
+# for this_imgs_folder_name in os.listdir(total_folder):
+    
+#     this_imgs_folder_A=total_folder+'\\'+this_imgs_folder_name+'\\A'
+#     this_imgs_folder_B=total_folder+'\\'+this_imgs_folder_name+'\\B'
+    
+#     list_object_depth.append(int(this_imgs_folder_name.strip('g=').strip('mm')))
+    
+#     list_VCM_code_focused_A.append(C_P_S.PeakSearch(this_imgs_folder_A,'Boccignone','Center','Global'))
+#     list_VCM_code_focused_B.append(C_P_S.PeakSearch(this_imgs_folder_B,'Boccignone','Center','Global'))
+
+# import dill
+# dill.dump_session('focus_calibration_'+total_folder.split('\\')[-1]+'.pkl')
