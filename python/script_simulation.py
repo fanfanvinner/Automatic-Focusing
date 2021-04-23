@@ -57,7 +57,7 @@ from __init__ import *
 
 # '''dynamic depth focus calibration'''
 # #%%
-total_folder=r'E:\GitHub\KAMERAWERK\VCM-Dual\Material\Stereo Effect Experiment\20210422'
+total_folder=r'E:\GitHub\KAMERAWERK\VCM-Dual\Material\Stereo Effect Experiment\20210423'
 
 list_object_depth=[]
 list_VCM_code_focused_left=[]
