@@ -71,7 +71,7 @@ def DualFOV(g):
     print('==> Rear Point: %d [mm]'%RearPoint(g))
     print('==> Front Point: %d [mm]'%FrontPoint(g))
     
-g=400
+g=600
 
 DualFOV(g)
 

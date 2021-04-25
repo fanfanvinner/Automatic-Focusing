@@ -39,7 +39,7 @@ from __init__ import *
 
 #             this_imgs_folder=total_folder+'\\'+this_imgs_folder_name
 
-#             C_P_S.PeakSearch(this_imgs_folder,'Boccignone',this_ROI_mode,this_peak_search_method)
+#             C_P_S.PeakSearch(this_imgs_folder,'Boccignone',this_ROI_mode,this_peak_search_met hod)
             
 #             # S_A_F.LensAnimation(this_imgs_folder,'Boccignone',this_ROI_mode,this_peak_search_method)
 #             # S_A_F.FOVAnimation(this_imgs_folder,'Boccignone',this_ROI_mode,this_peak_search_method)
@@ -57,7 +57,7 @@ from __init__ import *
 
 # '''dynamic depth focus calibration'''
 # #%%
-total_folder=r'E:\GitHub\KAMERAWERK\VCM-Dual\Material\Stereo Effect Experiment\20210423'
+total_folder=r'E:\GitHub\KAMERAWERK\VCM-Dual\Material\Stereo Effect Experiment\20210425'
 
 list_object_depth=[]
 list_VCM_code_focused_left=[]
