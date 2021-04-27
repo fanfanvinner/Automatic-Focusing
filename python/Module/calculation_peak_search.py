@@ -830,7 +830,7 @@ def PeakSearch(imgs_folder,operator,ROI_mode,peak_search_method):
     
     except:
         
-        output_folder_condition=str_a+'\\AF Curve\Operator'
+        output_folder_condition=str_a+'/AF Curve/Operator'
     
     output_folder_operator+='/'+operator+'/'
     output_folder_condition+='/'+operator+'/'
@@ -884,20 +884,25 @@ def PeakSearch(imgs_folder,operator,ROI_mode,peak_search_method):
     #text of parameter
     if ROI_mode=='5-Area':
                 
-        str_text='ROI Zoom Factor: %d Weight: %.2f-%.2f'%(zoom_factor/2,
+        str_text='Zoom Factor: %d A Weight: %.2f-%.2f'%(zoom_factor/2,
                                                           ROI_weight_5_area[0],
                                                           ROI_weight_5_area[1])
     
     if ROI_mode=='9-Area':
                 
-        str_text='ROI Zoom Factor: %d Weight: %.2f-%.2f'%(zoom_factor/2,
+        str_text='Zoom Factor: %d A Weight: %.2f-%.2f'%(zoom_factor/2,
                                                           ROI_weight_9_area[4],
                                                           ROI_weight_9_area[0])
         
     if ROI_mode=='Center':              
 
-        str_text='ROI Zoom Factor: %d'%(zoom_factor/2) 
+        str_text='Zoom Factor: %d'%(zoom_factor/2) 
         
+    if ROI_mode=='Center-5-Partition':
+                
+       str_text='Zoom Factor: %d P Weight: %.2f-%.2f'%(zoom_factor/2,
+                                                       ROI_weight_5_area[0],
+                                                       ROI_weight_5_area[1])
     '''input image and bound'''
     ax_input_image=plt.subplot(121)
     

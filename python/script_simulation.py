@@ -84,8 +84,8 @@ for this_imgs_folder_name in os.listdir(total_folder):
     
     list_object_depth.append(int(this_imgs_folder_name.strip('g=').strip('mm')))
     
-    list_VCM_code_focused_left.append(C_P_S.PeakSearch(this_imgs_folder_left,'Boccignone','Center','Global'))
-    list_VCM_code_focused_right.append(C_P_S.PeakSearch(this_imgs_folder_right,'Boccignone','Center','Global'))
+    list_VCM_code_focused_left.append(C_P_S.PeakSearch(this_imgs_folder_left,'Boccignone','Center-5-Partition','Global'))
+    list_VCM_code_focused_right.append(C_P_S.PeakSearch(this_imgs_folder_right,'Boccignone','Center-5-Partition','Global'))
 
 # import dill
 # dill.dump_session('focus_calibration_'+total_folder.split('\\')[-1]+'.pkl')

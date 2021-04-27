@@ -72,7 +72,7 @@ class frame:
         #size of area
         area_half_height=int(np.shape(self.img_gray)[0]/zoom_factor)
         area_half_width=int(np.shape(self.img_gray)[1]/zoom_factor)
-        
+ 
         if ROI_mode=='9-Area':
             
             list_center_9_area=[[height/2+i*height/4,width/2+j*width/4] for i in [-1,0,1] for j in [-1,0,1]]
@@ -80,27 +80,27 @@ class frame:
             #calculate contrast in each area
             list_contrast_9_areas=[]
             
-            for i,j in list_center_9_area:
+            for i_a,j_a in list_center_9_area:
                         
-                this_area=self.img_gray[int(i)-area_half_height:int(i)+area_half_height,
-                                        int(j)-area_half_width:int(j)+area_half_width]
+                this_area=self.img_gray[int(i_a)-area_half_height:int(i_a)+area_half_height,
+                                        int(j_a)-area_half_width:int(j_a)+area_half_width]
             
                 #collect it
                 list_contrast_9_areas.append(C_F_V.FocusValue(this_area,operator))
             
                 #draw the bound of ROI
-                for k in range(ROI_linewidth):
+                for k_a in range(ROI_linewidth):
                     
                     '''NEED MODIFICATION'''
-                    self.img_ROI[int(i-k)-area_half_height,int(j-k)-area_half_width:int(j+k+1)+area_half_width]=1
-                    self.img_ROI[int(i+k)+area_half_height,int(j-k)-area_half_width:int(j+k+1)+area_half_width]=1
-                    self.img_ROI[int(i-k)-area_half_height:int(i+k+1)+area_half_height,int(j-k)-area_half_width]=1
-                    self.img_ROI[int(i-k)-area_half_height:int(i+k+1)+area_half_height,int(j+k)+area_half_width]=1
+                    self.img_ROI[int(i_a-k_a)-area_half_height,int(j_a-k_a)-area_half_width:int(j_a+k_a+1)+area_half_width]=1
+                    self.img_ROI[int(i_a+k_a)+area_half_height,int(j_a-k_a)-area_half_width:int(j_a+k_a+1)+area_half_width]=1
+                    self.img_ROI[int(i_a-k_a)-area_half_height:int(i_a+k_a+1)+area_half_height,int(j_a-k_a)-area_half_width]=1
+                    self.img_ROI[int(i_a-k_a)-area_half_height:int(i_a+k_a+1)+area_half_height,int(j_a+k_a)+area_half_width]=1
             
             #collect the data
             self.focus_value=np.sum(np.array(ROI_weight_9_area)*np.array(list_contrast_9_areas))
        
-        if ROI_mode=='5-Area':
+        elif ROI_mode=='5-Area':
             
             list_center_5_area=[[ height/2, width/2],
                                 [ height/4, width/4],
@@ -109,33 +109,33 @@ class frame:
                                 [-height/4, width/4]]
             
             #calculate contrast in each area
-            list_contrast_5_areas=[]
+            list_contrast_5_area=[]
             
-            for i,j in list_center_5_area:
+            for i_a,j_a in list_center_5_area:
                         
-                this_area=self.img_gray[int(i)-area_half_height:int(i)+area_half_height,
-                                        int(j)-area_half_width:int(j)+area_half_width]
+                this_area=self.img_gray[int(i_a)-area_half_height:int(i_a)+area_half_height,
+                                        int(j_a)-area_half_width:int(j_a)+area_half_width]
             
                 #collect it
-                list_contrast_5_areas.append(C_F_V.FocusValue(this_area,operator))
+                list_contrast_5_area.append(C_F_V.FocusValue(this_area,operator))
             
                 #draw the bound of ROI
-                for k in range(ROI_linewidth):
+                for k_a in range(ROI_linewidth):
                     
-                    self.img_ROI[int(i-k)-area_half_height,int(j-k)-area_half_width:int(j+k+1)+area_half_width]=1
-                    self.img_ROI[int(i+k)+area_half_height,int(j-k)-area_half_width:int(j+k+1)+area_half_width]=1
-                    self.img_ROI[int(i-k)-area_half_height:int(i+k+1)+area_half_height,int(j-k)-area_half_width]=1
-                    self.img_ROI[int(i-k)-area_half_height:int(i+k+1)+area_half_height,int(j+k)+area_half_width]=1
+                    self.img_ROI[int(i_a-k_a)-area_half_height,int(j_a-k_a)-area_half_width:int(j_a+k_a+1)+area_half_width]=1
+                    self.img_ROI[int(i_a+k_a)+area_half_height,int(j_a-k_a)-area_half_width:int(j_a+k_a+1)+area_half_width]=1
+                    self.img_ROI[int(i_a-k_a)-area_half_height:int(i_a+k_a+1)+area_half_height,int(j_a-k_a)-area_half_width]=1
+                    self.img_ROI[int(i_a-k_a)-area_half_height:int(i_a+k_a+1)+area_half_height,int(j_a+k_a)+area_half_width]=1
             
             #collect the data
-            self.focus_value=np.sum(np.array(ROI_weight_5_area)*np.array(list_contrast_5_areas))
+            self.focus_value=np.sum(np.array(ROI_weight_5_area)*np.array(list_contrast_5_area))
        
-        if ROI_mode=='Center':
+        elif ROI_mode=='Center':
             
-            i,j=height/2, width/2
+            i_a,j_a=height/2, width/2
                         
-            this_area=self.img_gray[int(i)-area_half_height:int(i)+area_half_height,
-                                    int(j)-area_half_width:int(j)+area_half_width]
+            this_area=self.img_gray[int(i_a)-area_half_height:int(i_a)+area_half_height,
+                                    int(j_a)-area_half_width:int(j_a)+area_half_width]
         
             #collect the data
             self.focus_value=C_F_V.FocusValue(this_area,operator)
@@ -143,11 +143,58 @@ class frame:
             #draw the bound of ROI
             for k in range(ROI_linewidth):
                 
-                self.img_ROI[int(i-k)-area_half_height,int(j-k)-area_half_width:int(j+k+1)+area_half_width]=1
-                self.img_ROI[int(i+k)+area_half_height,int(j-k)-area_half_width:int(j+k+1)+area_half_width]=1
-                self.img_ROI[int(i-k)-area_half_height:int(i+k+1)+area_half_height,int(j-k)-area_half_width]=1
-                self.img_ROI[int(i-k)-area_half_height:int(i+k+1)+area_half_height,int(j+k)+area_half_width]=1
+                self.img_ROI[int(i_a-k_a)-area_half_height,int(j_a-k_a)-area_half_width:int(j_a+k_a+1)+area_half_width]=1
+                self.img_ROI[int(i_a+k_a)+area_half_height,int(j_a-k_a)-area_half_width:int(j_a+k_a+1)+area_half_width]=1
+                self.img_ROI[int(i_a-k_a)-area_half_height:int(i_a+k_a+1)+area_half_height,int(j_a-k_a)-area_half_width]=1
+                self.img_ROI[int(i_a-k_a)-area_half_height:int(i_a+k_a+1)+area_half_height,int(j_a+k_a)+area_half_width]=1
       
+        elif ROI_mode=='Center-5-Partition':
+            
+            i_a,j_a=height/2, width/2
+            
+            #size of center ROI
+            width_ROI=area_half_width*2
+            height_ROI=area_half_height*2
+            
+            #size of partition of ROI
+            partition_half_width=int(width_ROI/zoom_factor)
+            partition_half_height=int(width_ROI/zoom_factor)
+            
+            list_center_5_partition=[[ 0, 0],
+                                     [ height_ROI/4, width_ROI/4],
+                                     [ height_ROI/4,-width_ROI/4],
+                                     [-height_ROI/4,-width_ROI/4],
+                                     [-height_ROI/4, width_ROI/4]]
+            
+            #calculate contrast in each area
+            list_contrast_5_partition=[]
+            
+            for i_p,j_p in list_center_5_partition:
+                        
+                this_partition=self.img_gray[int(i_a+i_p)-partition_half_height:int(j_a+j_p)+partition_half_height,
+                                             int(i_a+i_p)-partition_half_width:int(j_a+j_p)+partition_half_width]
+            
+                #collect it
+                list_contrast_5_partition.append(C_F_V.FocusValue(this_partition,operator))
+            
+                #draw the bound of ROI
+                for k_p in range(ROI_linewidth):
+                    
+                    self.img_ROI[int(i_a+i_p-k_p)-partition_half_height,
+                                 int(j_a+j_p-k_p)-partition_half_width:int(j_a+j_p+k_p+1)+partition_half_width]=1
+                   
+                    self.img_ROI[int(i_a+i_p+k_p)+partition_half_height,
+                                 int(j_a+j_p-k_p)-partition_half_width:int(j_a+j_p+k_p+1)+partition_half_width]=1
+                    
+                    self.img_ROI[int(i_a+i_p-k_p)-partition_half_height:int(i_a+i_p+k_p+1)+partition_half_height,
+                                 int(j_a+j_p-k_p)-partition_half_width]=1
+                    
+                    self.img_ROI[int(i_a+i_p-k_p)-partition_half_height:int(i_a+i_p+k_p+1)+partition_half_height,
+                                 int(j_a+j_p+k_p)+partition_half_width]=1
+            
+            #collect the data
+            self.focus_value=np.sum(np.array(ROI_weight_5_area)*np.array(list_contrast_5_partition))
+        
         print('--> Lens Position Code:',self.lens_position_code)
         # print('--> Focus Value:',self.focus_value)
         
