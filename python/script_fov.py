@@ -29,8 +29,10 @@ baseline=20
 #Truly 12M
 #pixel size [mm]
 u = 1.4/1000;
+
 #f number 
 k = 1.8;
+
 #focal length [mm]
 f= 4.36;
 
@@ -71,7 +73,6 @@ def DualFOV(g):
     print('==> Rear Point: %d [mm]'%RearPoint(g))
     print('==> Front Point: %d [mm]'%FrontPoint(g))
     
-
 [DualFOV(g) for g in [200,300,400,500,600,700,800,1000,1200]]
 
 
