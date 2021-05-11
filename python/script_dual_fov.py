@@ -19,41 +19,6 @@ def SlopeLenth(length_horizontal,length_vertical):
     
     return np.sqrt(length_horizontal**2+length_vertical**2)
 
-#FOV angle in 3 axis
-angle_H=64.9
-angle_V=51.2
-angle_D=77.4
-
-baseline=20
-
-#Truly 12M
-#pixel size [mm]
-u = 1.4/1000;
-
-#f number 
-k = 1.8;
-
-#focal length [mm]
-f= 4.36;
-
-#depth of field front [mm]
-def FrontDepthOfField(g):
-
-    return k*u*g*(g-f)/(f*f+k*u*(g-f));
-    
-#depth of field rear [mm]
-def RearDepthOfField(g):
-
-    return k*u*g*(g-f)/(f*f-k*u*(g-f));
-
-def FrontPoint(g):
-    
-    return g-FrontDepthOfField(g)
-
-def RearPoint(g):
-    
-    return g+RearDepthOfField(g)
-
 def DualFOV(g):
     
     length_H=LengthFromAngle(angle_H,g)

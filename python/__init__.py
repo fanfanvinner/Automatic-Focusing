@@ -27,8 +27,18 @@ import calculation_contrast as C_C
 import calculation_histogram as C_H
 import calculation_peak_search as C_P_S
 import calculation_texture_feature as C_T_F
+import calculation_depth_of_field as C_D_O_F
 import calculation_numerical_analysis as C_N_A
 import calculation_scene_discrimination as C_S_D
 
 import experiment_parameter as E_P
 import simulation_automatic_focusing as S_A_F
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+from configuration_font import legend_prop,\
+                               text_prop,\
+                               label_prop,\
+                               title_prop,\
+                               annotation_prop
