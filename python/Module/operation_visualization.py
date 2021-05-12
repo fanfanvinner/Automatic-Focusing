@@ -14,17 +14,16 @@ from configuration_font import legend_prop,\
                                label_prop,\
                                title_prop,\
                                annotation_prop
-                               
+            
+from configuration_parameter import MODE_INTERVAL,length_step,step_index
+
 import matplotlib.pyplot as plt
 
 import calculation_depth_of_field as C_D_O_F
 
-length_step=5
-
 def PlotDoFAndg1D(list_focused_depth):
     
     n_sample=len(list_focused_depth)
-    
     
     #list of rear depth of field
     list_rear_DoF=[C_D_O_F.RearDoFDepthFromDepth(g) for g in list_focused_depth]
@@ -95,7 +94,7 @@ def PlotDoFAndg2D(list_focused_depth):
     
     for k in range(n_sample):
      
-        this_focused_depth=list_focused_depth[k]
+        this_focused_depth=(k+1)*length_step*2
         this_rear_DoF=list_rear_DoF[k]
         this_front_DoF=list_front_DoF[k]
         
@@ -121,16 +120,27 @@ def PlotDoFAndg2D(list_focused_depth):
                    linestyle='-')
         
         #focused depth
-        plt.hlines(y=this_focused_depth,
+        plt.hlines(y=list_focused_depth[k],
                    xmin=this_focused_depth-length_step,
                    xmax=this_focused_depth+length_step,
                    color='olive',
                    linestyle='-')
+        
+    if MODE_INTERVAL=='equal':
     
+        #define index to plot
+        list_index=[len(list_focused_depth)-1-k*step_index for k in range(int(len(list_focused_depth))//step_index)]
+        
+        list_index.reverse()
+        
+        plt.gca().set_xticks([(this_index+1)*length_step*2 for this_index in list_index])
+        plt.gca().set_xticklabels([str(int(list_focused_depth[this_index])) for this_index in list_index])
+        
     #set ticks fonts
     plt.tick_params(labelsize=12)
     labels=plt.gca().get_xticklabels()+plt.gca().get_yticklabels()
     
+
     #label fonts
     [this_label.set_fontname('Times New Roman') for this_label in labels]
     

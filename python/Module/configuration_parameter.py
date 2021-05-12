@@ -54,3 +54,12 @@ f= 4.36;
 #ratio of coverage
 K_rear=0.0    
 K_front=0.0
+
+#length between lines in visualization
+length_step=4
+
+#index interval between ticks in visualization
+step_index=4
+
+#mode of interval of depth
+MODE_INTERVAL='equal'
