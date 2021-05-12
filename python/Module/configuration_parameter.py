@@ -33,7 +33,6 @@ pre_fix='VCM_'
 #marker size of focus value samples
 size_marker=4
 
-
 #FOV angle in 3 axis
 angle_H=64.9
 angle_V=51.2
@@ -51,3 +50,7 @@ F= 1.8;
 
 #focal length [mm]
 f= 4.36;
+
+#ratio of coverage
+K_rear=0.0    
+K_front=0.0
