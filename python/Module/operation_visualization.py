@@ -97,6 +97,13 @@ def PlotDoFAndg2D(list_focused_depth):
         this_focused_depth=(k+1)*length_step*2
         this_rear_DoF=list_rear_DoF[k]
         this_front_DoF=list_front_DoF[k]
+
+        plt.gca().add_patch(plt.Rectangle(
+            (this_focused_depth-length_step, this_front_DoF),  # (x,y)矩形左下角
+            width=length_step*2,  
+            height=this_rear_DoF-this_front_DoF,
+            color='grey', 
+            alpha=0.5))
         
         #DoF range
         plt.vlines(x=this_focused_depth,

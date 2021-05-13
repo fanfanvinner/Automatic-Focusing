@@ -38,8 +38,6 @@ import simulation_automatic_focusing as S_A_F
 import numpy as np
 import matplotlib.pyplot as plt
 
-from configuration_font import legend_prop,\
-                               text_prop,\
-                               label_prop,\
-                               title_prop,\
-                               annotation_prop
+from configuration_font import title_prop
+
+from configuration_parameter import g_min,g_max

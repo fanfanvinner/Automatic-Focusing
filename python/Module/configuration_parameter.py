@@ -51,9 +51,13 @@ F= 1.8;
 #focal length [mm]
 f= 4.36;
 
+#focused depth range
+g_min=300
+g_max=3900
+
 #ratio of coverage
-K_rear=0.0    
-K_front=0.0
+K_rear=0.2    
+K_front=0.2
 
 #length between lines in visualization
 length_step=4

@@ -24,7 +24,7 @@ list_focused_depth=[(k+1)*interval_g for k in range(n_sample)]
 # O_V.PlotDoFAndg2D(list_focused_depth)
 # plt.title('Depth of Field based on Focused Depth (equal Interval)',fontdict=title_prop)
 
-'''unequal interval A'''
+'''unequal interval no coverage'''
 list_focused_depth=[]
 
 #define max focused depth
@@ -47,24 +47,21 @@ for g in range(1,g_max,interval_g):
 # O_V.PlotDoFAndg1D(list_focused_depth)
 # plt.title('Depth of Field (unequal Interval)',fontdict=title_prop)
 
-O_V.PlotDoFAndg2D(list_focused_depth)
-plt.title('Depth of Field based on Focused Depth (no coverage)',fontdict=title_prop)
+# O_V.PlotDoFAndg2D(list_focused_depth)
+# plt.title('Depth of Field based on Focused Depth (no coverage)',fontdict=title_prop)
 
-g_min=100
-g_max=3900
+# '''coverage from near'''
+# #list of focused depth
+# list_focused_depth=[g_min]
 
-'''coverage from near'''
-#list of focused depth
-list_focused_depth=[g_min]
-
-while (list_focused_depth[-1]<g_max):
+# while (list_focused_depth[-1]<g_max):
     
-    list_focused_depth.append(C_D_O_F.DepthFromLastDepth(list_focused_depth[-1]))
+#     list_focused_depth.append(C_D_O_F.DepthFromLastDepth(list_focused_depth[-1]))
     
-O_V.PlotDoFAndg2D(list_focused_depth)
-plt.title('Depth of Field based on Focused Depth (coverage from near)',fontdict=title_prop)
+# O_V.PlotDoFAndg2D(list_focused_depth)
+# plt.title('Depth of Field based on Focused Depth (coverage from near)',fontdict=title_prop)
 
-'''unequal interval from far'''
+# '''unequal interval from far'''
 #list of focused depth
 list_focused_depth=[g_max]
 
