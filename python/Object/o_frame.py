@@ -141,7 +141,7 @@ class frame:
             self.focus_value=C_F_V.FocusValue(this_area,operator)
         
             #draw the bound of ROI
-            for k in range(ROI_linewidth):
+            for k_a in range(ROI_linewidth):
                 
                 self.img_ROI[int(i_a-k_a)-area_half_height,int(j_a-k_a)-area_half_width:int(j_a+k_a+1)+area_half_width]=1
                 self.img_ROI[int(i_a+k_a)+area_half_height,int(j_a-k_a)-area_half_width:int(j_a+k_a+1)+area_half_width]=1
@@ -196,7 +196,7 @@ class frame:
             self.focus_value=np.sum(np.array(ROI_weight_5_area)*np.array(list_contrast_5_partition))
         
         print('--> Lens Position Code:',self.lens_position_code)
-        # print('--> Focus Value:',self.focus_value)
+        print('--> Focus Value:',self.focus_value)
         
         if not flag_plot:
             

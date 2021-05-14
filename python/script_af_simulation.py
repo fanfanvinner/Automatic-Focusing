@@ -57,35 +57,35 @@ from __init__ import *
 
 # '''dynamic depth focus calibration'''
 # #%%
-total_folder=r'E:\GitHub\KAMERAWERK\VCM-Dual\Material\Stereo Effect Experiment\20210425'
+total_folder=r'E:\GitHub\KAMERAWERK\VCM-Dual\Material\Stereo Effect Experiment'
 
 list_object_depth=[]
 list_VCM_code_focused_left=[]
 list_VCM_code_focused_right=[]
 
-# # #%%
-# # g=98
+#%%
+g=666
 
-# # imgs_folder_A=total_folder+'\\g='+str(g)+'mm\\A'
-# # imgs_folder_B=total_folder+'\\g='+str(g)+'mm\\B'
+imgs_folder_left=total_folder+'\\g='+str(g)+'mm\\Left'
+imgs_folder_right=total_folder+'\\g='+str(g)+'mm\\Right'
 
-# # list_object_depth.append(g)
+list_object_depth.append(g)
 
-# # list_VCM_code_focused_A.append(C_P_S.PeakSearch(imgs_folder_A,'Boccignone','9-Area','Global'))
-# # list_VCM_code_focused_B.append(C_P_S.PeakSearch(imgs_folder_B,'Boccignone','5-Area','Global'))
+list_VCM_code_focused_left.append(C_P_S.PeakSearch(imgs_folder_left,'Boccignone','Center','Global'))
+# list_VCM_code_focused_right.append(C_P_S.PeakSearch(imgs_folder_right,'Boccignone','Center','Global'))
 
 # #%%
 
-#traverse all image series and calculate VCM code of focused image
-for this_imgs_folder_name in os.listdir(total_folder):
+# #traverse all image series and calculate VCM code of focused image
+# for this_imgs_folder_name in os.listdir(total_folder):
     
-    this_imgs_folder_left=total_folder+'\\'+this_imgs_folder_name+'\\Left'
-    this_imgs_folder_right=total_folder+'\\'+this_imgs_folder_name+'\\Right'
+#     this_imgs_folder_left=total_folder+'\\'+this_imgs_folder_name+'\\Left'
+#     this_imgs_folder_right=total_folder+'\\'+this_imgs_folder_name+'\\Right'
     
-    list_object_depth.append(int(this_imgs_folder_name.strip('g=').strip('mm')))
+#     list_object_depth.append(int(this_imgs_folder_name.strip('g=').strip('mm')))
     
-    list_VCM_code_focused_left.append(C_P_S.PeakSearch(this_imgs_folder_left,'Boccignone','Center-5-Partition','Global'))
-    list_VCM_code_focused_right.append(C_P_S.PeakSearch(this_imgs_folder_right,'Boccignone','Center-5-Partition','Global'))
+#     list_VCM_code_focused_left.append(C_P_S.PeakSearch(this_imgs_folder_left,'Boccignone','Center','Global'))
+#     list_VCM_code_focused_right.append(C_P_S.PeakSearch(this_imgs_folder_right,'Boccignone','Center','Global'))
 
-# import dill
-# dill.dump_session('focus_calibration_'+total_folder.split('\\')[-1]+'.pkl')
+# # import dill
+# # dill.dump_session('focus_calibration_'+total_folder.split('\\')[-1]+'.pkl')

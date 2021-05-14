@@ -92,6 +92,9 @@ double ContrastROI(vector<int>& vector_ROI, const string& contrast_operator) {
 	double L_max = static_cast<double>(L_maximum) + 0.5;
 	double L_min = static_cast<double>(L_minimum) + 0.5;
 
+	cout << "--> Luminance maximum: " << L_max << endl;
+	cout << "--> Luminance minimum: " << L_min << endl;
+
 	//final result
 	double contrast=0.0;
 
@@ -122,6 +125,9 @@ double ContrastROI(vector<int>& vector_ROI, const string& contrast_operator) {
 
 		double average_gray_level_f = fore_back_luminance[0];
 		double average_gray_level_b = fore_back_luminance[1];
+
+		cout << "--> Luminance foreground: " << int(average_gray_level_f) << endl;
+		cout << "--> Luminance background: " << int(average_gray_level_b) << endl;
 
 		contrast = log(average_gray_level_f / average_gray_level_b);
 	}
