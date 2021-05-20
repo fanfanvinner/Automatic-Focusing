@@ -74,3 +74,18 @@ list_focused_depth.reverse()
 
 O_V.PlotDoFAndg2D(list_focused_depth)
 plt.title('Depth of Field based on Focused Depth (coverage from far)',fontdict=title_prop)
+
+#generate tuple list to contain focused depth and its DOF
+list_focused_depth_DoF=[]
+
+#from far to near
+list_focused_depth.reverse()
+
+for this_depth in list_focused_depth:
+    
+    this_rear_DoF=C_D_O_F.RearDoFDepthFromDepth(this_depth)
+    this_front_DoF=C_D_O_F.FrontDoFDepthFromDepth(this_depth)
+    
+    list_focused_depth_DoF.append((this_depth,this_front_DoF,this_rear_DoF))
+    
+O_E.WriteTupleList2File(list_focused_depth_DoF,'../Outcome/focused point depth.txt')

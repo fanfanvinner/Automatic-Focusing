@@ -52,7 +52,7 @@ F= 1.8;
 f= 4.36;
 
 #focused depth range
-g_min=300
+g_min=100
 g_max=3900
 
 #ratio of coverage

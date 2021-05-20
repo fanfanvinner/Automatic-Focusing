@@ -186,7 +186,6 @@ def CurveBatch(list_x_batch,
         
     plt.figure(figsize=(13,6))
     
-    list_plot=[]
     for k in range(len(list_x_batch)):
             
         this_list_x=list_x_batch[k]
@@ -254,7 +253,6 @@ def CurveBatch(list_x_batch,
     
     plt.xlabel(str_xlabel,fontdict=label_prop)
     plt.ylabel(str_ylabel,fontdict=label_prop)
-    
     
     plt.legend(prop=legend_prop,loc='upper right')
     
