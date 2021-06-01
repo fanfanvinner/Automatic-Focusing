@@ -126,3 +126,17 @@ def DepthFromNextDepth(g_next):
     g_front=(1-K_front)*FrontDoFDepthFromDepth(g_next)+K_front*g_next
     
     return DepthFromRearDoFDepth(g_front)
+
+#------------------------------------------------------------------------------
+"""
+Calculation of image distance from object depth [mm]
+
+Args:
+    g: object depth  
+    
+Returns:
+    image distance
+"""
+def ImageDepth(g):
+    
+    return f*g/(g-f)

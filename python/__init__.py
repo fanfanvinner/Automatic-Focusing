@@ -40,4 +40,4 @@ import matplotlib.pyplot as plt
 
 from configuration_font import title_prop
 
-from configuration_parameter import g_min,g_max
+from configuration_parameter import g_min,g_max,f

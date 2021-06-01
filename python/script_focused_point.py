@@ -89,3 +89,66 @@ for this_depth in list_focused_depth:
     list_focused_depth_DoF.append((this_depth,this_front_DoF,this_rear_DoF))
     
 O_E.WriteTupleList2File(list_focused_depth_DoF,'../Outcome/focused point depth.txt')
+
+list_g=[this_depth[0] for this_depth in list_focused_depth_DoF]
+list_b=[C_D_O_F.ImageDepth(g) for g in list_g]
+    
+O_C.Curve(list_g,
+          list_b,
+          'maroon',
+          'Image Distance',
+          'Object Depth (mm)',
+          'Image Distance (mm)',
+          'Image Distance-Object Depth Curve of Focused Points',
+          method_smoothing='optimized fitting')
+
+O_C.Curve(list_g[1:],
+          np.diff(list_b),
+          'olive',
+          'Differnece of Image Distance',
+          'Differnece of Object Depth (mm)',
+          'Image Distance (mm)',
+          'Differnece of Image Distance-Object Depth Curve of Focused Points',
+          method_smoothing='optimized fitting')
+
+file=open('../Outcome/g_code_98_3998_A.txt')
+
+lines=file.readlines()
+
+map_g_code={}
+
+for this_line in lines:
+    
+    list_str=this_line.split(',')
+    map_g_code[int(list_str[0])]=int(list_str[1])
+    
+#focused VCM code and depth
+list_code=[]
+list_depth=[]
+
+for this_g in list_g:
+    
+    this_depth=int(this_g) 
+    
+    if this_depth in list(map_g_code.keys()):
+        
+        list_depth.append(this_depth)
+        list_code.append(map_g_code[this_depth])
+
+O_C.Curve(list_depth,
+          list_code,
+          'maroon',
+          'Focused VCM Code',
+          'Object Depth (mm)',
+          'Focused VCM Code (--)',
+          'Focused VCM Code-Object Depth Curve of Focused Points',
+          method_smoothing='optimized fitting')
+
+O_C.Curve(list_depth[1:],
+          np.diff(list_code),
+          'olive',
+          'Differnece of Focused VCM Code',
+          'Object Depth (mm)',
+          'Differnece of Focused VCM Code (--)',
+          'Differnece of Focused VCM Code-Object Depth Curve of Focused Points',
+          method_smoothing='optimized fitting')
