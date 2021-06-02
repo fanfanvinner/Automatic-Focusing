@@ -54,8 +54,8 @@ def GlobalContrast(img_gray,contrast_operator):
     #luminance of background and foreground
     L_b,L_f=C_S_D.ForeAndBackLuminance(img_gray)
 
-    print('--> Luminance foreground: %d'%L_f)
-    print('--> Luminance background: %d'%L_b)
+    # print('--> Luminance foreground: %d'%L_f)
+    # print('--> Luminance background: %d'%L_b)
     
     #maximum and minimum of luminance
     L_max,L_min=np.max(gray_array),np.min(gray_array)

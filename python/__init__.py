@@ -27,6 +27,7 @@ import operation_visualization as O_V
 import calculation_contrast as C_C
 import calculation_histogram as C_H
 import calculation_peak_search as C_P_S
+import calculation_focus_value as C_F_V
 import calculation_texture_feature as C_T_F
 import calculation_depth_of_field as C_D_O_F
 import calculation_numerical_analysis as C_N_A
@@ -41,3 +42,5 @@ import matplotlib.pyplot as plt
 from configuration_font import title_prop
 
 from configuration_parameter import g_min,g_max,f
+
+import cv2
