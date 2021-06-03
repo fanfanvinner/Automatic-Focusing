@@ -59,7 +59,7 @@ for g in range(1,g_max,interval_g):
 #     list_focused_depth.append(C_D_O_F.DepthFromLastDepth(list_focused_depth[-1]))
     
 # O_V.PlotDoFAndg2D(list_focused_depth)
-# plt.title('Depth of Field based on Focused Depth (coverage from near)',fontdict=title_prop)
+# plt.title('Depth of Field based on Focused Depth (Coverage from Near)',fontdict=title_prop)
 
 # '''unequal interval from far'''
 #list of focused depth
@@ -73,7 +73,7 @@ while (list_focused_depth[-1]>g_min):
 list_focused_depth.reverse()
 
 O_V.PlotDoFAndg2D(list_focused_depth)
-plt.title('Depth of Field based on Focused Depth (coverage from far)',fontdict=title_prop)
+plt.title('Depth of Field based on Focused Depth (Coverage from Far)',fontdict=title_prop)
 
 #generate tuple list to contain focused depth and its DOF
 list_focused_depth_DoF=[]
@@ -111,29 +111,29 @@ list_b=[C_D_O_F.ImageDepth(g) for g in list_g]
 #           'Differnece of Image Distance-Object Depth Curve of Focused Points',
 #           method_smoothing='optimized fitting')
 
-# file=open('../Outcome/g_code_98_3998_A.txt')
+file=open('../Outcome/g_code_98_3998_A.txt')
 
-# lines=file.readlines()
+lines=file.readlines()
 
-# map_g_code={}
+map_g_code={}
 
-# for this_line in lines:
+for this_line in lines:
     
-#     list_str=this_line.split(',')
-#     map_g_code[int(list_str[0])]=int(list_str[1])
+    list_str=this_line.split(',')
+    map_g_code[int(list_str[0])]=int(list_str[1])
     
-# #focused VCM code and depth
-# list_code=[]
-# list_depth=[]
+#focused VCM code and depth
+list_code=[]
+list_depth=[]
 
-# for this_g in list_g:
+for this_g in list_g:
     
-#     this_depth=int(this_g) 
+    this_depth=int(this_g) 
     
-#     if this_depth in list(map_g_code.keys()):
+    if this_depth in list(map_g_code.keys()):
         
-#         list_depth.append(this_depth)
-#         list_code.append(map_g_code[this_depth])
+        list_depth.append(this_depth)
+        list_code.append(map_g_code[this_depth])
 
 # O_C.Curve(list_depth,
 #           list_code,
@@ -153,7 +153,7 @@ list_b=[C_D_O_F.ImageDepth(g) for g in list_g]
 #           'Differnece of Focused VCM Code-Object Depth Curve of Focused Points',
 #           method_smoothing='optimized fitting')
 
-depth_measured=500
+depth_measured=200
 error_depth=50
 
 def FocusedPointsFromMeasuredDepth(depth_measured,error_depth):
@@ -187,4 +187,7 @@ def FocusedPointsFromMeasuredDepth(depth_measured,error_depth):
     return [list_focused_depth_DoF[k][0] for k in range(index_min,index_max+1)]
         
 list_focused_depth_to_search=FocusedPointsFromMeasuredDepth(depth_measured,error_depth)
-        
+list_VCM_code_to_search=[map_g_code[int(this_depth)] for this_depth in list_focused_depth_to_search]
+
+print(list_focused_depth_to_search)
+print(list_VCM_code_to_search)
