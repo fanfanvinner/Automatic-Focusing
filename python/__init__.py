@@ -44,3 +44,5 @@ from configuration_font import title_prop
 from configuration_parameter import g_min,g_max,f
 
 import cv2
+
+from configuration_font import legend_prop,label_prop,title_prop,sample_prop

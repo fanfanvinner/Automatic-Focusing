@@ -11,9 +11,6 @@ Created on Thu Dec 19 10:50:07 2019
 
 from __init__ import *
 
-import numpy as np
-import matplotlib.pyplot as plt
-
 import dill
 dill.load_session('focus_calibration_20210413.pkl')
 

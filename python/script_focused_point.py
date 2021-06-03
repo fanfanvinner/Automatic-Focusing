@@ -93,62 +93,98 @@ O_E.WriteTupleList2File(list_focused_depth_DoF,'../Outcome/focused point depth.t
 list_g=[this_depth[0] for this_depth in list_focused_depth_DoF]
 list_b=[C_D_O_F.ImageDepth(g) for g in list_g]
     
-O_C.Curve(list_g,
-          list_b,
-          'maroon',
-          'Image Distance',
-          'Object Depth (mm)',
-          'Image Distance (mm)',
-          'Image Distance-Object Depth Curve of Focused Points',
-          method_smoothing='optimized fitting')
+# O_C.Curve(list_g,
+#           list_b,
+#           'maroon',
+#           'Image Distance',
+#           'Object Depth (mm)',
+#           'Image Distance (mm)',
+#           'Image Distance-Object Depth Curve of Focused Points',
+#           method_smoothing='optimized fitting')
 
-O_C.Curve(list_g[1:],
-          np.diff(list_b),
-          'olive',
-          'Differnece of Image Distance',
-          'Differnece of Object Depth (mm)',
-          'Image Distance (mm)',
-          'Differnece of Image Distance-Object Depth Curve of Focused Points',
-          method_smoothing='optimized fitting')
+# O_C.Curve(list_g[1:],
+#           np.diff(list_b),
+#           'olive',
+#           'Differnece of Image Distance',
+#           'Differnece of Object Depth (mm)',
+#           'Image Distance (mm)',
+#           'Differnece of Image Distance-Object Depth Curve of Focused Points',
+#           method_smoothing='optimized fitting')
 
-file=open('../Outcome/g_code_98_3998_A.txt')
+# file=open('../Outcome/g_code_98_3998_A.txt')
 
-lines=file.readlines()
+# lines=file.readlines()
 
-map_g_code={}
+# map_g_code={}
 
-for this_line in lines:
+# for this_line in lines:
     
-    list_str=this_line.split(',')
-    map_g_code[int(list_str[0])]=int(list_str[1])
+#     list_str=this_line.split(',')
+#     map_g_code[int(list_str[0])]=int(list_str[1])
     
-#focused VCM code and depth
-list_code=[]
-list_depth=[]
+# #focused VCM code and depth
+# list_code=[]
+# list_depth=[]
 
-for this_g in list_g:
+# for this_g in list_g:
     
-    this_depth=int(this_g) 
+#     this_depth=int(this_g) 
     
-    if this_depth in list(map_g_code.keys()):
+#     if this_depth in list(map_g_code.keys()):
         
-        list_depth.append(this_depth)
-        list_code.append(map_g_code[this_depth])
+#         list_depth.append(this_depth)
+#         list_code.append(map_g_code[this_depth])
 
-O_C.Curve(list_depth,
-          list_code,
-          'maroon',
-          'Focused VCM Code',
-          'Object Depth (mm)',
-          'Focused VCM Code (--)',
-          'Focused VCM Code-Object Depth Curve of Focused Points',
-          method_smoothing='optimized fitting')
+# O_C.Curve(list_depth,
+#           list_code,
+#           'maroon',
+#           'Focused VCM Code',
+#           'Object Depth (mm)',
+#           'Focused VCM Code (--)',
+#           'Focused VCM Code-Object Depth Curve of Focused Points',
+#           method_smoothing='optimized fitting')
 
-O_C.Curve(list_depth[1:],
-          np.diff(list_code),
-          'olive',
-          'Differnece of Focused VCM Code',
-          'Object Depth (mm)',
-          'Differnece of Focused VCM Code (--)',
-          'Differnece of Focused VCM Code-Object Depth Curve of Focused Points',
-          method_smoothing='optimized fitting')
+# O_C.Curve(list_depth[1:],
+#           np.diff(list_code),
+#           'olive',
+#           'Differnece of Focused VCM Code',
+#           'Object Depth (mm)',
+#           'Differnece of Focused VCM Code (--)',
+#           'Differnece of Focused VCM Code-Object Depth Curve of Focused Points',
+#           method_smoothing='optimized fitting')
+
+depth_measured=500
+error_depth=50
+
+def FocusedPointsFromMeasuredDepth(depth_measured,error_depth):
+    
+    list_index_to_search=[]
+
+    #traverse and make sure where it exists
+    for this_focused_depth_DoF in list_focused_depth_DoF:
+        
+        this_focused_depth=this_focused_depth_DoF[0]
+        this_front_DoF=this_focused_depth_DoF[1]
+        this_rear_DoF=this_focused_depth_DoF[2]
+        
+        #collect head
+        if this_front_DoF<depth_measured+error_depth<this_rear_DoF:
+            
+            list_index_to_search.append(list_focused_depth_DoF.index(this_focused_depth_DoF))
+        
+        #collect rail
+        if this_front_DoF<depth_measured-error_depth<this_rear_DoF:
+            
+            list_index_to_search.append(list_focused_depth_DoF.index(this_focused_depth_DoF))
+
+    #range of index
+    index_min=np.min(list_index_to_search)
+    index_max=np.max(list_index_to_search)
+    
+    #final list
+    list_index_final=[k for k in range(index_min,index_max+1)]
+    
+    return [list_focused_depth_DoF[k][0] for k in range(index_min,index_max+1)]
+        
+list_focused_depth_to_search=FocusedPointsFromMeasuredDepth(depth_measured,error_depth)
+        

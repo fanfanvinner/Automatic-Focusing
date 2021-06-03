@@ -9,7 +9,7 @@ Created on Fri Apr 23 10:12:34 2021
 @title: script-Automatic Focusing Simulation
 """
 
-import numpy as np
+from __init__ import *
 
 def LengthFromAngle(angle,depth):
     
